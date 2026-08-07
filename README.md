@@ -1,4 +1,3 @@
-[README_movie_booking_with_live_link (1).md](https://github.com/user-attachments/files/30827136/README_movie_booking_with_live_link.1.md)
 # 🎬 Movie Ticket Booking Backend
 
 A production-style movie ticket booking API built with **FastAPI, PostgreSQL, and Redis** — designed around the classic backend interview problem: guaranteeing that two users can never book the same seat, even under simultaneous concurrent requests.
