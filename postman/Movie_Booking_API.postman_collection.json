@@ -1,0 +1,224 @@
+{
+  "info": {
+    "name": "Movie Ticket Booking API",
+    "description": "Full collection covering auth, movies, theatres, shows, bookings, and payments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8001" },
+    { "key": "access_token", "value": "" },
+    { "key": "admin_token", "value": "" },
+    { "key": "refresh_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register (customer)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Customer\",\n  \"email\": \"customer@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{base_url}}/auth/register"
+          }
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"adminpass123\",\n  \"admin_secret\": \"change-this-secret-for-creating-admin-accounts\"\n}"
+            },
+            "url": "{{base_url}}/auth/register-admin"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{base_url}}/auth/login"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+            },
+            "url": "{{base_url}}/auth/refresh"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "item": [
+        {
+          "name": "Create Movie (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception\",\n  \"description\": \"A mind-bending thriller\",\n  \"duration_minutes\": 148,\n  \"genre\": \"Sci-Fi\",\n  \"language\": \"English\",\n  \"release_date\": \"2010-07-16\",\n  \"rating\": 8.8\n}"
+            },
+            "url": "{{base_url}}/movies"
+          }
+        },
+        {
+          "name": "List Movies",
+          "request": { "method": "GET", "url": "{{base_url}}/movies?page=1&page_size=10" }
+        },
+        {
+          "name": "Get Movie by ID",
+          "request": { "method": "GET", "url": "{{base_url}}/movies/1" }
+        },
+        {
+          "name": "Search Movies",
+          "request": { "method": "GET", "url": "{{base_url}}/movies?search=incep" }
+        }
+      ]
+    },
+    {
+      "name": "Theatres, Screens & Seats",
+      "item": [
+        {
+          "name": "Create Theatre (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"PVR Cinemas\",\n  \"city\": \"Mumbai\",\n  \"address\": \"Phoenix Mall\"\n}"
+            },
+            "url": "{{base_url}}/theatres"
+          }
+        },
+        {
+          "name": "Create Screen (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"theatre_id\": 1,\n  \"name\": \"Screen 1\"\n}" },
+            "url": "{{base_url}}/screens"
+          }
+        },
+        {
+          "name": "Generate Seats (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rows\": 8,\n  \"seats_per_row\": 12,\n  \"premium_rows\": 2\n}"
+            },
+            "url": "{{base_url}}/screens/1/seats/generate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shows",
+      "item": [
+        {
+          "name": "Create Show (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movie_id\": 1,\n  \"screen_id\": 1,\n  \"show_time\": \"2026-12-25T18:00:00Z\",\n  \"price\": \"250.00\"\n}"
+            },
+            "url": "{{base_url}}/shows"
+          }
+        },
+        {
+          "name": "List Shows",
+          "request": { "method": "GET", "url": "{{base_url}}/shows?movie_id=1" }
+        },
+        {
+          "name": "Get Show Detail",
+          "request": { "method": "GET", "url": "{{base_url}}/shows/1" }
+        },
+        {
+          "name": "Get Seat Availability",
+          "request": { "method": "GET", "url": "{{base_url}}/shows/1/seats" }
+        }
+      ]
+    },
+    {
+      "name": "Bookings & Payments",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"show_id\": 1,\n  \"seat_ids\": [1, 2]\n}" },
+            "url": "{{base_url}}/bookings"
+          }
+        },
+        {
+          "name": "My Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/bookings/me"
+          }
+        },
+        {
+          "name": "Pay for Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"booking_id\": 1,\n  \"simulate_failure\": false\n}" },
+            "url": "{{base_url}}/payments"
+          }
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/bookings/1/cancel"
+          }
+        }
+      ]
+    }
+  ]
+}
