@@ -1,8 +1,17 @@
+[README_movie_booking_with_live_link (1).md](https://github.com/user-attachments/files/30827136/README_movie_booking_with_live_link.1.md)
 # 🎬 Movie Ticket Booking Backend
 
 A production-style movie ticket booking API built with **FastAPI, PostgreSQL, and Redis** — designed around the classic backend interview problem: guaranteeing that two users can never book the same seat, even under simultaneous concurrent requests.
 
 This isn't a CRUD tutorial clone. The system is built around a layered architecture (routers → services → repositories → models) and demonstrates real backend engineering concerns: concurrency-safe transactions, JWT refresh token rotation, role-based authorization, Redis caching, and global rate limiting.
+
+---
+
+## 🌐 Live Demo
+
+Try it live: **https://movie-booking-system-53u1.onrender.com/docs**
+
+⚠️ Hosted on a free tier — the first request may take 30-60 seconds to wake up if it's been idle. Use the **Authorize** button in Swagger to log in and test protected endpoints directly in the browser.
 
 ---
 
@@ -142,7 +151,7 @@ python tests/load_test_booking.py
 ```
 Fires 15 simultaneous booking requests, from 15 different users, at the exact same seat. Expected result: **exactly 1 succeeds, 14 correctly rejected with 409** — proving the double-booking guarantee holds under real concurrent load, not just sequential testing.
 
-**Sample output:**
+**Verified output (ran locally via `tests/load_test_booking.py`):**
 ```
 Total concurrent requests: 15
 Successful bookings (201): 1
