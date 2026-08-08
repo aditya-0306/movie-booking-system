@@ -8,7 +8,7 @@ This isn't a CRUD tutorial clone. The system is built around a layered architect
 
 ## 🌐 Live Demo
 
-Try it live: **https://movie-booking-system-53u1.onrender.com/docs**
+Try it live: **https://movie-booking-system-53ul.onrender.com/docs**
 
 ⚠️ Hosted on a free tier — the first request may take 30-60 seconds to wake up if it's been idle. Use the **Authorize** button in Swagger to log in and test protected endpoints directly in the browser.
 
